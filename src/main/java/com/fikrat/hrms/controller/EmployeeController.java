@@ -22,13 +22,13 @@ public class EmployeeController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Employee> add(@RequestBody AddEmployeeDto dto){
+    public ResponseEntity<Employee> add(@RequestBody AddEmployeeDto dto) {
         return ResponseEntity.ok(employeeService.add(dto));
     }
 
     @PostMapping("/byManager")
     @PreAuthorize("hasRole('MANAGER')")
-    public ResponseEntity<Employee> add(Principal principal, @RequestBody EmployeeRequestDto employeeRequestDto){
-        return ResponseEntity.ok(employeeService.add(principal,employeeRequestDto));
+    public ResponseEntity<Employee> add(Principal principal, @RequestBody EmployeeRequestDto employeeRequestDto) {
+        return ResponseEntity.ok(employeeService.add(principal, employeeRequestDto));
     }
 }

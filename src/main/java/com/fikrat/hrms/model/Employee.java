@@ -1,5 +1,7 @@
 package com.fikrat.hrms.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +13,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@NamedEntityGraph(name = "employee_entity_graph",
+        attributeNodes = {@NamedAttributeNode("user"), @NamedAttributeNode("manager")})
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

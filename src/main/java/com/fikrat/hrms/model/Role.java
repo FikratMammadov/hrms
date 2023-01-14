@@ -1,5 +1,6 @@
 package com.fikrat.hrms.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fikrat.hrms.model.enums.ERole;
 import lombok.*;
 

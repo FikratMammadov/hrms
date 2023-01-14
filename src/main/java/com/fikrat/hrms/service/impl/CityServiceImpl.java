@@ -27,19 +27,12 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public void delete(Long id) {
-        log.info("ActionLog.deleteCity.start");
-        cityRepository.deleteById(id);
-        log.info("ActionLog.deleteCity.end");
-    }
-
-    @Override
-    public City update(Long id, CityDto dto) {
+    public void update(Long id, CityDto dto) {
         log.info("ActionLog.updateCity.start");
         City city = cityRepository.findById(id).orElseThrow(() -> new CityNotFoundException("City not found"));
-        city = CityMapper.INSTANCE.cityDtoToCity(dto);
+        city.setName(dto.getName());
+        cityRepository.save(city);
         log.info("ActionLog.updateCity.end");
-        return city;
     }
 
     @Override

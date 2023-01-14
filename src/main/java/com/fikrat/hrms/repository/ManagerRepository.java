@@ -7,11 +7,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager, Long> {
     boolean existsManagerByUser(User user);
     Manager findByUserId(Long userId);
+
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "manager_entity_graph")
     List<Manager> findAll();
+
+    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "manager_entity_graph")
+    Optional<Manager> findById(Long id);
 }

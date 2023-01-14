@@ -65,7 +65,10 @@ public class ManagerServiceImpl implements ManagerService {
         log.info("ActionLog.getOwnEmployees.start");
         User managerUser = userRepository.findByUsername(principal.getName()).orElseThrow(() ->
                 new UsernameNotFoundException("Username not found with name " + principal.getName()));
-        List<Employee> employees = employeeRepository.findAllByManagerId(managerUser.getId());
+
+        Manager manager = managerRepository.findByUserId(managerUser.getId());
+
+        List<Employee> employees = employeeRepository.findAllByManagerId(manager.getId());
         log.info("ActionLog.getOwnEmployees.end");
         return employees;
     }

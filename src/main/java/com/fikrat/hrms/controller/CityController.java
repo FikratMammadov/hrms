@@ -21,15 +21,10 @@ public class CityController {
         return ResponseEntity.ok(cityService.add(cityDto));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        cityService.delete(id);
-        return ResponseEntity.ok().build();
-    }
-
     @PutMapping("/{id}")
-    public ResponseEntity<City> update(@PathVariable Long id, @RequestBody CityDto cityDto) {
-        return ResponseEntity.ok(cityService.update(id, cityDto));
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody CityDto cityDto) {
+        cityService.update(id,cityDto);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")

@@ -20,13 +20,13 @@ public class ManagerController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Manager> add(@RequestBody ManagerDto managerDto){
+    public ResponseEntity<Manager> add(@RequestBody ManagerDto managerDto) {
         return ResponseEntity.ok(managerService.add(managerDto));
     }
 
     @GetMapping("/employees")
     @PreAuthorize("hasRole('MANAGER')")
-    public ResponseEntity<List<Employee>> getOwnEmployees(Principal principal){
+    public ResponseEntity<List<Employee>> getOwnEmployees(Principal principal) {
         return ResponseEntity.ok(managerService.getOwnEmployees(principal));
     }
 }

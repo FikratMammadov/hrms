@@ -23,7 +23,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee add(AddEmployeeDto dto) {
         log.info("ActionLog.addEmployee.start");
+
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(Messages.USER_NOT_FOUND));
 
@@ -52,8 +52,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .manager(manager)
                 .build();
 
+        var response = employeeRepository.save(employee);
         log.info("ActionLog.addEmployee.end");
-        return employeeRepository.save(employee);
+        return response;
     }
 
     @Override
@@ -75,19 +76,24 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .manager(manager)
                 .build();
 
+        var response = employeeRepository.save(employee);
+
         log.info("ActionLog.addEmployee.end");
-        return employeeRepository.save(employee);
+        return response;
     }
 
     private void checkEmployeeExists(User user) {
+        log.info("ActionLog.checkEmployeeExists.start");
         Optional<Employee> employee = employeeRepository.findByUserId(user.getId());
         if (employee.isPresent()) {
             log.error("this user is already an employee, userId={}", user.getId());
             throw new EmployeeAlreadyExistsException(Messages.EMPLOYEE_ALREADY_EXISTS);
         }
+        log.info("ActionLog.checkEmployeeExists.end");
     }
 
     private void checkAdmin(User user) {
+        log.info("ActionLog.checkAdmin.start");
         Role role = roleRepository.findByName(ERole.ROLE_ADMIN)
                 .orElse(Role.builder().name(ERole.ROLE_ADMIN).build());
 
@@ -95,5 +101,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             log.error("this user is admin, admin = {}", user.getUsername());
             throw new UserIsAdminException(Messages.ADMIN_CAN_NOT_BE_EMPLOYEE);
         }
+        log.info("ActionLog.checkAdmin.end");
     }
 }
